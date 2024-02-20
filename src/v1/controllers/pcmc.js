@@ -39,7 +39,7 @@ const fetchAndStoreData = async () => {
 };
 
 // Schedule the cron job to run every 10 minutes
-const cronJob = new cron.CronJob('*/1 * * * *', fetchAndStoreData);
+const cronJob = new cron.CronJob('*/10 * * * *', fetchAndStoreData);
 
 
 cronJob.start();
