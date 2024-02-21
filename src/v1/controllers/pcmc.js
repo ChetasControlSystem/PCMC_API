@@ -30,9 +30,6 @@ const fetchAndStoreData = async () => {
             console.error('Error inserting data:', error);
         }
         
-
-        console.log('Data fetched and stored successfully.');
-
     } catch (error) {
         console.log('Error in cron job:', error);
     }
@@ -46,7 +43,13 @@ cronJob.start();
 
 exports.data = async function (req, res, next) {
     try {
-        res.json("Hello Nirav")
+
+        const smartCityData = await insertDataPool.connect();
+        const { recordset: getData } = await smartCityData.query(sqlQuery.throwData);
+        await smartCityData.close();
+
+        res.json(getData)
+        
     } catch (error) {
         console.error('Error executing query:', error);
         res.status(500).send('Internal Server Error');
